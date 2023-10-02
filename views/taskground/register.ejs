@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        .animated-div {
+    font-size: 24px;
+    text-align: center;
+    background-color: #3498db;
+    color: #fff;
+    padding: 20px;
+    animation: textChange 3s infinite;
+}
+
+/* Keyframes for text change animation */
+@keyframes textChange {
+    0%, 100% {
+        transform: scale(1);
+    }
+    10%, 90% {
+        transform: scale(1.1);
+    }
+    20%, 80% {
+        transform: scale(1);
+    }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .animated-div {
+        font-size: 18px;
+    }
+}
+body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-div">
+        <span class="text">Welcome to Task List </span>
+    </div>
+    <h2>Sign Up</h2>
+    <div class="container">
+        <form action="/" method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <button>Sign Up</button>
+            <p>Already Register<a href="login">Login</a></p>
+            <!-- <input type="submit" value="Sign Up"> -->
+        </form>
+
+    </div>
+    <script>
+        const textElement = document.querySelector('.text');
+const texts = ['Welcome to Task List ', 'ADD TASK HERE', 'Mention DUE DATE','UPDATE TASK ALSO'];
+
+let currentIndex = 0;
+
+function changeText() {
+    textElement.textContent = texts[currentIndex];
+    currentIndex = (currentIndex + 1) % texts.length;
+}
+
+setInterval(changeText, 3000);
+        </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task App</title>
+    <!-- Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Task App</h1>
+
+        <!-- Add a new task   -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Add a New Task</h2>
+                        <form id="task-form">
+                            <div class="form-group">
+                                <label for="title">Title:</label>
+                                <input type="text" id="title" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="task">Task:</label>
+                                <textarea id="task" class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="dueDate">Due Date:</label>
+                                <input type="date" id="dueDate" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Task</button>
+                            <button type="button" id="update-button" class="btn btn-warning" style="display:none;">Update Task</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4" id="task-cards">
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const taskForm = document.getElementById('task-form');
+        const updateButton = document.getElementById('update-button');
+        const taskCards = document.getElementById('task-cards');
+        let editIndex = -1;
+
+        taskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('title').value;
+            const task = document.getElementById('task').value;
+            const dueDate = document.getElementById('dueDate').value;
+
+            if (editIndex !== -1) {
+                // Update task
+                const card = document.getElementById(`task-card-${editIndex}`);
+                card.querySelector('.card-title').textContent = title;
+                card.querySelector('.card-text').textContent = task;
+                card.querySelector('.due-date').textContent = `Due Date: ${dueDate}`;
+
+                // Reset the form
+                taskForm.reset();
+                updateButton.style.display = 'none';
+                editIndex = -1;
+            } else {
+                // Add task
+                const card = document.createElement('div');
+                card.className = 'col-md-4';
+                card.innerHTML = `
+                    <div class="card mb-4" id="task-card-${taskCards.childElementCount}">
+                        <div class="card-body">
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text">${task}</p>
+                            <p class="card-text due-date">Due Date: ${dueDate}</p>
+                            <button class="btn btn-danger delete-button">Delete</button>
+                            <button class="btn btn-warning edit-button">Edit</button>
+                        </div>
+                    </div>
+                `;
+
+                // Add event listeners for delete and edit buttons
+                card.querySelector('.delete-button').addEventListener('click', () => {
+                    card.remove();
+                });
+
+                card.querySelector('.edit-button').addEventListener('click', () => {
+                    const cardTitle = card.querySelector('.card-title').textContent;
+                    const cardTask = card.querySelector('.card-text').textContent;
+                    const cardDueDate = card.querySelector('.due-date').textContent.replace('Due Date: ', '');
+
+                    document.getElementById('title').value = cardTitle;
+                    document.getElementById('task').value = cardTask;
+                    document.getElementById('dueDate').value = cardDueDate;
+
+                    updateButton.style.display = 'block';
+                    editIndex = card.id.split('-')[2];
+                });
+
+                taskCards.appendChild(card);
+                taskForm.reset();
+            }
+        });
+    </script>
+</body>
+</html>
