@@ -1,4 +1,29 @@
 <% layout('layouts/boilerplate') %>
-<h1>
-    we are connecting all task here for a particular user 
-</h1>
+<div class="container">
+    <div class="row mt-4">
+        <% tasks.forEach((task, index) => { %>
+            <div class="col-md-4">
+                <div class="card mb-4" id="task-card-<%= index %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= task.title %></h5>
+                        <p class="card-text"><%= task.task %></p>
+                        <p class="card-text due-date">Due Date: <%= task.dueDate ? task.dueDate.toDateString() : 'Not specified' %></p>
+
+                        <p class="card-text status">Status: <%= task.status %></p>
+                        <form action="/edit-task/<%= task._id %>" method="GET">
+                            <button class="btn btn-warning edit-button">Edit</button>
+                        </form>
+                        <form action="/delete-task/<%= task._id %>" method="POST">
+                            <button class="btn btn-danger delete-button">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<!-- Include Bootstrap JavaScript libraries -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

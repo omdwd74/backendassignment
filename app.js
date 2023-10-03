@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose')
 const User = require('./models/user');
+const Task = require('./models/taskground')
 const ejs = require('ejs');
 const ejsMate = require('ejs-mate')
 const session = require('express-session')
@@ -60,21 +61,31 @@ app.post('/login', async (req, res) => {
         res.redirect('login')
     }
 })
-const tasks = [];
+// const tasks = [];
 
-app.get('/home', (req, res) => {
-  res.render('taskground/home', { tasks });
+app.get('/home', async(req, res) => {
+   
+       const tasks = await Task.find({});
+        res.render('taskground/home',{tasks});
+   
 });
 
-app.post('/add-task', (req, res) => {
-  const { title, task, dueDate } = req.body;
-  tasks.push({ title, task, dueDate });
-  res.redirect('/home');
+app.post('/home', async(req, res) => {
+  const { title, task, dueDate,status } = req.body;
+  try {
+    const newTask = new Task({ title, task, dueDate, status });
+    await newTask.save();
+    res.redirect('/home');
+  } catch (err) {
+    console.error('Error adding task:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
-app.get('/taskview',(req,res)=>{
-    res.render('taskground/taskview');
-    
-})
+app.get('/taskview', async (req, res) => {
+    const tasks = await Task.find({});
+    res.render('taskground/taskview', { tasks });
+});
+
 
 
 app.listen(3000,()=>{
