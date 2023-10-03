@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task App</title>
-    <!-- Bootstrap CSS link -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  
-</head>
-<body>
+<% layout('layouts/boilerplate') %>
     <div class="container">
-        <h1 class="mt-5">Task App</h1>
+        <!-- <h1 class="mt-5">Task App</h1> -->
 
         <!-- Add a new task   -->
         <div class="row mt-4">
@@ -21,15 +11,20 @@
                         <form id="task-form">
                             <div class="form-group">
                                 <label for="title">Title:</label>
-                                <input type="text" id="title" class="form-control" required>
+                                <input type="text" id="title" class="form-control" required  placeholder="Title Name" value="title"> 
                             </div>
                             <div class="form-group">
                                 <label for="task">Task:</label>
-                                <textarea id="task" class="form-control" rows="3" required></textarea>
+                                <textarea id="task" class="form-control" rows="3" required placeholder="Description" value = "task"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="dueDate">Due Date:</label>
-                                <input type="date" id="dueDate" class="form-control" required>
+                                <input type="date" id="dueDate" class="form-control" required >  
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <input type="number" id="status" class="form-control" value="status" required>
+
                             </div>
                             <button type="submit" class="btn btn-primary">Add Task</button>
                             <button type="button" id="update-button" class="btn btn-warning" style="display:none;">Update Task</button>
@@ -107,5 +102,3 @@
             }
         });
     </script>
-</body>
-</html>

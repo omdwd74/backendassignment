@@ -71,6 +71,10 @@ app.post('/add-task', (req, res) => {
   tasks.push({ title, task, dueDate });
   res.redirect('/home');
 });
+app.get('/taskview',(req,res)=>{
+    res.render('taskground/taskview');
+    
+})
 
 
 app.listen(3000,()=>{
