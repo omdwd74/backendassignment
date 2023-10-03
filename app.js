@@ -7,6 +7,7 @@ const Task = require('./models/taskground')
 const ejs = require('ejs');
 const ejsMate = require('ejs-mate')
 const session = require('express-session')
+// const {isLoggedin} = require('./middleware')
 
 mongoose.connect('mongodb://localhost:27017/taskApp',{useNewUrlParser:true})
 
@@ -58,11 +59,11 @@ app.post('/login', async (req, res) => {
         res.redirect('/home');
     }
     else {
-        res.redirect('login')
+        res.redirect('login');
     }
 })
 
-app.get('/home', async(req, res) => {
+app.get('/home',async(req, res) => {
    
        const tasks = await Task.find({});
         res.render('taskground/home',{tasks});
