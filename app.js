@@ -61,7 +61,6 @@ app.post('/login', async (req, res) => {
         res.redirect('login')
     }
 })
-// const tasks = [];
 
 app.get('/home', async(req, res) => {
    
@@ -85,8 +84,12 @@ app.get('/taskview', async (req, res) => {
     const tasks = await Task.find({});
     res.render('taskground/taskview', { tasks });
 });
-
-
+//Define a route to delete a task
+app.post('/delete-task/:taskId', async (req, res) => {
+    const { taskId } = req.params;
+    await Task.findByIdAndDelete(taskId);
+    res.redirect('/taskview');
+});
 
 app.listen(3000,()=>{
     console.log('listening on port 3000');
