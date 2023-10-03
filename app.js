@@ -84,13 +84,26 @@ app.get('/taskview', async (req, res) => {
     const tasks = await Task.find({});
     res.render('taskground/taskview', { tasks });
 });
-//Define a route to delete a task
 app.post('/delete-task/:taskId', async (req, res) => {
     const { taskId } = req.params;
     await Task.findByIdAndDelete(taskId);
     res.redirect('/taskview');
 });
 
+// for edit 
+app.get('/edit-task/:taskId', async (req, res) => {
+    const { taskId } = req.params;
+    const task = await Task.findById(taskId);
+    res.render('taskground/edit-task', { task });
+});
+
+// Define a route to update a task
+app.post('/update-task/:taskId', async (req, res) => {
+    const { taskId } = req.params;
+    const { title, task, dueDate, status } = req.body;
+    await Task.findByIdAndUpdate(taskId, { title, task, dueDate, status });
+    res.redirect('/taskview');
+});
 app.listen(3000,()=>{
     console.log('listening on port 3000');
 
